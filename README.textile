@@ -1,0 +1,20 @@
+h1. So... you'd like to work for "Integrum":http://integrumtech.com?
+
+*Please note that these tests all require some basic "Ruby":http://ruby-lang.org knowledge. If you don't know ruby, "take a few minutes to learn the basics":http://www.ruby-lang.org/en/documentation/quickstart/.  You will need to have Ruby, "rubygems":http://rubygems.org, "RSpec":http://rspec.info installed, and "Factory Girl":http://github.com/thoughtbot/factory_girl installed.*
+
+h3. In order to be considered for a position at Integrum, you must follow these steps.
+
+# Fork this repository (if you don't know how to do that, google is your friend)
+# In the *refactor-this* directory you will find some Ruby code that needs to be refactored.
+** A test suite is included with failing specs.
+** Please "refactor":http://www.refactoring.com/ this code, this is real code we found in a real project that could be much more readable and intuitive.
+** Run _spec helper_spec.rb_ to execute your specs and see if they are passing.
+** Please note: feel free to change the specs, but they should all be passing when you turn in your code.
+# In the *github-challenge* directory, please create a Ruby script that accomplishes the following:
+** Connect to the github API
+** Find the "rails/rails":http://github.com/rails/rails repository
+** Find the most recent commits
+** Print out HTML that groups the recent commits by author. e.g. <pre><h1>Some Person</h1><ul><li>Commit: xxxxxxyyyyzzz<br/>Commit Message</li></ul></pre>
+# Add your resume to the *resume* directory
+# Commit and Push your code to your new repository
+# Send us a pull request, we will review your code and get back to you
