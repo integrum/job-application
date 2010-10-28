@@ -12,8 +12,9 @@ require 'photo'
 describe "Helper" do
   before(:each) do
     @helper = Helper.new
-    @helper.stub!(:profile_path).and_return("profile")
+    @helper.stub!(:profile_path).and_return("profile_path")
     @helper.stub!(:url_for_file_column).and_return("file_column_url")
+    @helper.stub!(:set_image_default_html).and_return({})
   end
   describe "display_photo" do
     before do
