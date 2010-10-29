@@ -27,7 +27,7 @@ describe "Helper" do
     describe "With a profile, user and photo requesting a link" do
       before(:each) do
         @helper.stub!(:image_tag).and_return("")
-        @helper.stub!(:link_to).and_return("this link")
+        @helper.stub_chain(:link_to).and_return("this link")
         @profile = UserProfile.new
         @profile.name = "Clayton"
         @user    = User.new
