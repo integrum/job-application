@@ -112,6 +112,5 @@ describe "Helper" do
       end
     end
     
-    
   end
 end
