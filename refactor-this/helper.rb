@@ -1,67 +1,42 @@
 class Helper
-  def self.foo
-    "foo"
+  require 'active_support/core_ext/hash/reverse_merge'
+
+  def profile_path(profile)
+    "/profiles/#{profile.name}"
+  end
+  
+  def link_to(link, href = "")
+    "<a href='"+href+"'>"+link+"</a>"
   end
 
-  def image_size(profile, non_rep_size)
-    if profile.user.rep?
-      '190x114'
-    else
-      non_rep_size
-    end
+  def image_tag(img, html = {})
+    "<img src='"+img+"' />"
   end
 
-  def display_small_photo(profile, html = {}, options = {})
-    display_photo(profile, image_size(profile, "32x32"), html, options)
-  end
-
-  def display_medium_photo(profile, html = {}, options = {})
-    display_photo(profile, image_size(profile, "48x48"), html, options)
-  end
-
-  def display_large_photo(profile, html = {}, options = {}, link = true)
-    display_photo(profile, image_size(profile, "64x64"), html, options, link)
-  end
-
-  def display_huge_photo(profile, html = {}, options = {}, link = true)
-    display_photo(profile, image_size(profile, "200x200"), html, options, link)
+  def url_for_file_column(user, photo, size)
+    "/#{user}/#{photo}_#{size}.jpg"
   end
 
   def display_photo(profile, size, html = {}, options = {}, link = true)
-    return image_tag("wrench.png") unless profile  # this should not happen
-
+    return image_tag("wrench.png") unless profile
     show_default_image = !(options[:show_default] == false)
     html.reverse_merge!(:class => 'thumbnail', :size => size, :title => "Link to #{profile.name}")
 
-    if profile && profile.user
-      if profile.user && profile.user.photo && File.exists?(profile.user.photo)
-        @user = profile.user
-        if link
-          return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) )
-        else
-          return image_tag(url_for_file_column("user", "photo", size), html)
-        end
-      else
-        show_default_image ? default_photo(profile, size, {}, link) : ''
-      end
+    if profile.has_valid_photo?
+      img_url = url_for_file_column(profile.name, "photo", size)
+      profile_image = image_tag(img_url, html)
+      link ? link_to(profile_image, profile_path(profile) ) : profile_image
+    else
+      show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
     end
-
-    show_default_image ? default_photo(profile, size, {}, link) : ''
   end
 
   def default_photo(profile, size, html={}, link = true)
-    if link
-      if profile.user.rep?
-        link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
-      else
-        link_to(image_tag("user#{size}.jpg", html), profile_path(profile) )
-      end
+    if profile.user && profile.user.rep?
+      img_tag = image_tag("rep_default_#{size}.jpg", html)
     else
-      if profile.user.rep?
-        image_tag("user190x119.jpg", html)
-      else
-        image_tag("user#{size}.jpg", html)
-      end
+      img_tag = image_tag("default_#{size}.jpg", html)
     end
+    link ? link_to(img_tag, profile_path(profile) ) : img_tag
   end
 end
