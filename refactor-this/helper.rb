@@ -41,11 +41,9 @@ class Helper
           return image_tag(url_for_file_column("user", "photo", size), html)
         end
       else
-        show_default_image ? default_photo(profile, size, {}, link) : ''
+        show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
       end
     end
-
-    show_default_image ? default_photo(profile, size, {}, link) : ''
   end
 
   def default_photo(profile, size, html={}, link = true)

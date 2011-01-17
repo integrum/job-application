@@ -95,14 +95,14 @@ describe "Helper" do
 	    
 	        describe "and we don't want to display the default" do
 			      before(:each) do
-			        @profile.stub!(:has_valid_photo?).and_return(false)
+			        @options = {:show_default => false}
 			      end
 			      describe "and the user is a rep user" do
 			        before(:each) do
 			          @user.stub!(:rep?).and_return(true)
 			        end
 			        it "return a default link" do
-			          @helper.display_photo(@profile, "100x100", {}, {:show_default => false}, true).should == "NO DEFAULT"
+			          @helper.display_photo(@profile, "100x100", {}, @options, true).should == "NO DEFAULT"
 			        end
 			      end
 		      
@@ -111,7 +111,7 @@ describe "Helper" do
 			          @user.stub!(:rep?).and_return(false)
 			        end
 			        it "return a default link" do
-			          @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default link 100x100"
+			          @helper.display_photo(@profile, "100x100", {}, @options, true).should == "NO DEFAULT"
 			        end
 			      end
 		      end
