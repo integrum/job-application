@@ -9,7 +9,7 @@ class Helper
   {:small => '32x32', :medium => '48x48', :large => '64x64', :huge => '200x200'}.each do |name, size|   
     send :define_method, "display_#{name}_photo" do |*args|
       profile = args[0]
-      size '190x119' if profile.user && profile.user.rep?  
+      size = '190x119' if profile.user && profile.user.rep?  
       args = [profile, size, args[1], args[2]]
       args << true if /large|huge/.match(name.to_s)
       display_photo(*args)

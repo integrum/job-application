@@ -137,15 +137,29 @@ describe "Helper" do
         @profile = UserProfile.new
         @user = User.new
         @profile.user = @user 
-           
-        args = [@profile, size, {}, {}] 
-        args << true if /large|huge/.match(name.to_s)
-        @helper.stub!(:display_photo).with(*args).and_return("photo")
-        @user.stub!(:rep?).and_return(false)
       end
-      it "should return a #{name} photo" do
-        @helper.send("display_#{name}_photo", @profile, {}, {}).should == "photo"
-      end 
+      describe "With a regular user" do
+        before do
+          args = [@profile, size, {}, {}]
+	        args << true if /large|huge/.match(name.to_s)
+          @helper.stub!(:display_photo).with(*args).and_return("photo")
+          @user.stub!(:rep?).and_return(false)
+        end
+        it "return a #{name} photo" do
+       	 @helper.send("display_#{name}_photo", @profile, {}, {}).should == "photo"
+	      end 
+      end
+      describe "With a rep user" do
+        before do
+          args = [@profile, "190x119", {}, {}]
+	        args << true if /large|huge/.match(name.to_s)
+          @helper.stub!(:display_photo).with(*args).and_return("photo")
+          @user.stub!(:rep?).and_return(true)
+        end
+        it "return a fixed-size photo" do
+       	  @helper.send("display_#{name}_photo", @profile, {}, {}).should == "photo"
+	      end 
+      end
     end
   end
 end
