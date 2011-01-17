@@ -26,8 +26,8 @@ describe "Helper" do
       end
     end
         
-    describe "With a profile, user and photo requesting a link" do
-      before(:each) do
+    describe "With a profile, user" do
+      before do
         @profile = UserProfile.new
         @profile.name = "Clayton"
         @user    = User.new
@@ -36,30 +36,28 @@ describe "Helper" do
         @user.photo = @photo
         @html = {:class => 'thumbnail', :size => "100x100", :title => "Link to #{@profile.name}"}
         
-        @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
         @profile.stub!(:has_valid_photo?).and_return(true)
         @helper.stub!(:url_for_file_column).with("user", "photo", "100x100").and_return("imagefile")
-        @helper.stub!(:image_tag).with("imagefile", @html).and_return("image_tag")
-        @helper.stub!(:link_to).with("image_tag", "profile_path").and_return("this link")
+	      @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
       end
-      it "should return a link" do
-        @helper.display_photo(@profile, "100x100", {}, {}, true).should == "this link"
-      end
-    end
-    
-    describe "With a profile, user and photo not requesting a link" do
-      before(:each) do
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
-        @user    = User.new
-        @profile.user = @user
-        @photo   = Photo.new
-        @user.photo = @photo
-        @profile.stub!(:has_valid_photo?).and_return(true)
-      end
-      it "should just an image" do
-        @helper.display_photo(@profile, "100x100", {}, {}, false).should == "just image"
-      end
+      describe "and a user and photo requesting a link" do
+	      before(:each) do
+	        @helper.stub!(:image_tag).with("imagefile", @html).and_return("image_tag")
+	        @helper.stub!(:link_to).with("image_tag", "profile_path").and_return("this link")
+	      end
+	      it "return a link" do
+	        @helper.display_photo(@profile, "100x100", {}, {}, true).should == "this link"
+	      end
+	    end
+	    
+	    describe "and photo not requesting a link" do
+	      before(:each) do
+	        @helper.stub!(:image_tag).with("imagefile", @html).and_return("just image")
+	      end
+	      it "return just an image" do
+	        @helper.display_photo(@profile, "100x100", {}, {}, false).should == "just image"
+	      end
+	    end
     end
     
     describe "Without a user, but requesting a link" do
