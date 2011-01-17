@@ -14,8 +14,15 @@ describe "Helper" do
     @helper = Helper.new
   end
   describe "display_photo" do
-    it "should return the wrench if there is no profile" do
-      @helper.display_photo(nil, "100x100", {}, {}, true).should == "wrench.png"
+    describe "If the profile is not set" do
+      before do
+        @helper.stub!(:image_tag) do |img|
+          img
+        end
+      end
+      it "return the wrench" do
+        @helper.display_photo(nil, "100x100", {}, {}, true).should == "wrench.png"
+      end
     end
         
     describe "With a profile, user and photo requesting a link" do
