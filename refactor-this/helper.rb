@@ -34,8 +34,7 @@ class Helper
     html.reverse_merge!(:class => 'thumbnail', :size => size, :title => "Link to #{profile.name}")
 
     if profile && profile.user
-      if profile.user && profile.user.photo && File.exists?(profile.user.photo)
-        @user = profile.user
+      if profile.has_valid_photo? 
         if link
           return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) )
         else
