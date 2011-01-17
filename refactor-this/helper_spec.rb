@@ -117,6 +117,22 @@ describe "Helper" do
 			      end
 		      end
 		    end
+		    
+		    # test the display_X_photo methods
+        {:small => '32x32', :medium => '48x48', :large => '64x64', :huge => '200x200'}.each do |name, size|   
+            describe "display_#{name}_photo" do
+              before do
+                args = [@profile, size, {}, {}] 
+                args << true if /large|huge/.match(name.to_s)
+                @helper.stub!(:display_photo).with(*args).and_return("photo")
+                @user.stub!(:rep?).and_return(false)
+              end
+              it "should return a #{name} photo" do
+                @helper.send("display_#{name}_photo", @profile, {}, {}).should == "photo"
+              end 
+            end
+        end
+        
       end
       describe "no user, but requesting a link" do
         before(:each) do
@@ -128,5 +144,8 @@ describe "Helper" do
         end
       end
     end
+    
+  
+    
   end
 end
