@@ -34,7 +34,7 @@ describe "Helper" do
 	      
 	      @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
       end
-      describe "and user" do
+      describe "user" do
         before do
 	        @user    = User.new
 	        @profile.user = @user
@@ -42,7 +42,7 @@ describe "Helper" do
 	        @profile.stub!(:has_valid_photo?).and_return(true)
 	        @helper.stub!(:url_for_file_column).with("user", "photo", "100x100").and_return("imagefile")
 	      end
-	      describe "and photo" do
+	      describe "and photo," do
 	        before do
 	          @photo   = Photo.new
 		        @user.photo = @photo
@@ -68,7 +68,7 @@ describe "Helper" do
   	    end
 	    
 	    
-	      describe "without a photo" do
+	      describe "without a photo," do
   	      before(:each) do
 	          @profile.stub!(:has_valid_photo?).and_return(false)
 	        end
@@ -94,7 +94,7 @@ describe "Helper" do
 		        end
 		      end
 	    
-	        describe "and we don't want to display the default" do
+	        describe "we don't want to display the default," do
 			      before(:each) do
 			        @options = {:show_default => false}
 			      end
@@ -102,7 +102,7 @@ describe "Helper" do
 			        before(:each) do
 			          @user.stub!(:rep?).and_return(true)
 			        end
-			        it "return a default link" do
+			        it "return 'NO DEFAULT'" do
 			          @helper.display_photo(@profile, "100x100", {}, @options, true).should == "NO DEFAULT"
 			        end
 			      end
@@ -111,7 +111,7 @@ describe "Helper" do
 	            before(:each) do
 			          @user.stub!(:rep?).and_return(false)
 			        end
-			        it "return a default link" do
+			        it "return 'NO DEFAULT'" do
 			          @helper.display_photo(@profile, "100x100", {}, @options, true).should == "NO DEFAULT"
 			        end
 			      end
