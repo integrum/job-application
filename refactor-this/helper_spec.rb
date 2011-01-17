@@ -24,15 +24,14 @@ describe "Helper" do
         
     describe "With a profile," do
       before do
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
+        @profile = Factory.build(:user_profile)
 	      @html = {:class => 'thumbnail', :size => "100x100", :title => "Link to #{@profile.name}"}
 	      
 	      @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
       end
       describe "user" do
         before do
-	        @user    = User.new
+	        @user    = Factory.build(:user)
 	        @profile.user = @user
 	        
 	        @profile.stub!(:has_valid_photo?).and_return(true)
@@ -40,7 +39,7 @@ describe "Helper" do
 	      end
 	      describe "and photo," do
 	        before do
-	          @photo   = Photo.new
+	          @photo   = Factory.build(:photo)
 		        @user.photo = @photo
 	        end
 	        describe "requesting a link" do
@@ -130,8 +129,8 @@ describe "Helper" do
   {:small => '32x32', :medium => '48x48', :large => '64x64', :huge => '200x200'}.each do |name, size|   
     describe "display_#{name}_photo" do
       before do
-        @profile = UserProfile.new
-        @user = User.new
+        @profile = Factory.build(:user_profile)
+        @user = Factory.build(:user)
         @profile.user = @user 
       end
       describe "With a regular user" do
