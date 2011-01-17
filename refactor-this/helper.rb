@@ -1,5 +1,10 @@
 class Helper
   
+  def profile_path(profile)
+    # FIXME: figure what this should actually be
+    "/path/to/profiles/#{profile.name}" 
+  end
+
   # Define methods for display_X_photo, where X can be small, medium, large, or huge
   {:small => '32x32', :medium => '48x48', :large => '64x64', :huge => '200x200'}.each do |name, size|   
     send :define_method, "display_#{name}_photo" do |*args|
