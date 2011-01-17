@@ -85,6 +85,8 @@ describe "Helper" do
   	      describe "and the user is a regular user" do
   	        before(:each) do
 		          @user.stub!(:rep?).and_return(false)
+	            @helper.stub!(:image_tag).with("user100x100.jpg", {}).and_return("image_tag")
+			        @helper.stub!(:link_to).with("image_tag", "profile_path").and_return("default link 100x100")
 		        end
 		        it "return a default link" do
 		          @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default link 100x100"
