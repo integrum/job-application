@@ -8,6 +8,7 @@ require 'user_profile'
 require 'helper'
 require 'user'
 require 'photo'
+require 'active_support/core_ext/hash/reverse_merge'
 
 describe "Helper" do
   before(:each) do
@@ -33,7 +34,13 @@ describe "Helper" do
         @profile.user = @user
         @photo   = Photo.new
         @user.photo = @photo
+        @html = {:class => 'thumbnail', :size => "100x100", :title => "Link to #{@profile.name}"}
+        
+        @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
         @profile.stub!(:has_valid_photo?).and_return(true)
+        @helper.stub!(:url_for_file_column).with("user", "photo", "100x100").and_return("imagefile")
+        @helper.stub!(:image_tag).with("imagefile", @html).and_return("image_tag")
+        @helper.stub!(:link_to).with("image_tag", "profile_path").and_return("this link")
       end
       it "should return a link" do
         @helper.display_photo(@profile, "100x100", {}, {}, true).should == "this link"

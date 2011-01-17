@@ -1,5 +1,5 @@
 class Photo
-  def to_s
+  def to_str
     "photo.rb"
   end
 end
