@@ -26,20 +26,21 @@ describe "Helper" do
       end
     end
         
-    describe "With a profile" do
+    describe "With a profile," do
       before do
         @profile = UserProfile.new
         @profile.name = "Clayton"
+	      @html = {:class => 'thumbnail', :size => "100x100", :title => "Link to #{@profile.name}"}
+	      
+	      @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
       end
       describe "and user" do
         before do
 	        @user    = User.new
 	        @profile.user = @user
-	        @html = {:class => 'thumbnail', :size => "100x100", :title => "Link to #{@profile.name}"}
 	        
 	        @profile.stub!(:has_valid_photo?).and_return(true)
 	        @helper.stub!(:url_for_file_column).with("user", "photo", "100x100").and_return("imagefile")
-		      @helper.stub!(:profile_path).with(@profile).and_return("profile_path")
 	      end
 	      describe "and photo" do
 	        before do
@@ -117,14 +118,15 @@ describe "Helper" do
 		      end
 		    end
       end
-    end
-    describe "Without a user, but requesting a link" do
-      before(:each) do
+      describe "no user, but requesting a link" do
+        before(:each) do
+          @helper.stub!(:image_tag).with("user100x100.jpg", @html).and_return("image_tag")
+		      @helper.stub!(:link_to).with("image_tag", "profile_path").and_return("default link 100x100")
+        end
+        it "return a default link" do
+          @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default link 100x100"
+        end
       end
-      it "return a default" do
-        @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default link 100x100"
-      end
     end
-    
   end
 end

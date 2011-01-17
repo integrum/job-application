@@ -43,6 +43,8 @@ class Helper
       else
         show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
       end
+    else
+      link_to(image_tag("user#{size}.jpg", html), profile_path(profile))
     end
   end
 
