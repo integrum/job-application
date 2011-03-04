@@ -26,42 +26,32 @@ class Helper
   def display_huge_photo(profile, html = {}, options = {}, link = true)
     display_photo(profile, image_size(profile, "200x200"), html, options, link)
   end
+  
+  def has_user_profile_and_photo?(profile)
+    return true if profile.user && profile.user.photo
+  end
+  
+  def is_rep_user?(profile)
+    return true if profile.user && profile.user.rep?
+  end
 
   def display_photo(profile, size, html = {}, options = {}, link = true)
-    return image_tag("wrench.png") unless profile  # this should not happen
+    return image_tag("wrench.png") if !profile
 
     show_default_image = !(options[:show_default] == false)
-    html.reverse_merge!(:class => 'thumbnail', :size => size, :title => "Link to #{profile.name}")
-
-    if profile && profile.user
-      if profile.user && profile.user.photo && File.exists?(profile.user.photo)
-        @user = profile.user
-        if link
-          return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) )
-        else
-          return image_tag(url_for_file_column("user", "photo", size), html)
-        end
-      else
-        show_default_image ? default_photo(profile, size, {}, link) : ''
-      end
+    
+    if has_user_profile_and_photo?(profile)
+      return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) ) if link
+      return image_tag(url_for_file_column("user", "photo", size), html)
     end
-
-    show_default_image ? default_photo(profile, size, {}, link) : ''
+    
+    return show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
   end
 
   def default_photo(profile, size, html={}, link = true)
     if link
-      if profile.user.rep?
-        link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
-      else
-        link_to(image_tag("user#{size}.jpg", html), profile_path(profile) )
-      end
-    else
-      if profile.user.rep?
-        image_tag("user190x119.jpg", html)
-      else
-        image_tag("user#{size}.jpg", html)
-      end
+      return link_to(image_tag("user100x100.jpg", html), profile_path(profile) ) if !is_rep_user?(profile)
+      return link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
     end
   end
 end
