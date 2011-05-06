@@ -53,7 +53,7 @@ describe "Helper" do
           should == "default link 100x100"
       end
     end
-    
+     
     describe "When the user doesn't have a photo" do
 
       before(:each) do
@@ -116,6 +116,34 @@ describe "Helper" do
         end
       end
     end
+  end
 
+  describe "dynamic methods" do
+
+    describe "when calling an invalid method" do
+
+      it "should raise an exeception" do
+        lambda { @helper.lol }.should raise_error
+      end
+    end
+
+    describe "when calling an invalid display_xyz_photo method" do
+    
+      it "should raise an exeception" do
+        lambda { @helper.display_xsmall_photo }.should raise_error
+      end
+    end
+
+    describe "when calling a valid display_xyz_photo method" do
+      it "should do it's thing" do
+        valid_photo_size = %w{small medium large huge}
+        valid_photo_size.each do |photo_size|
+          @helper.should_receive(:display_photo).and_return('herp')
+          @helper.should_receive(:image_size).and_return('derp')
+          lambda { @helper.send("display_#{photo_size}_photo".to_sym, 0) }.
+            should_not raise_error
+        end
+      end
+    end
   end
 end

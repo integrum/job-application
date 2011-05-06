@@ -1,30 +1,47 @@
 class Helper
-  def self.foo
-    "foo"
-  end
 
-  def image_size(profile, non_rep_size)
-    if profile.user.rep?
-      '190x114'
-    else
-      non_rep_size
+  class << self
+    def foo
+      "foo"
+    end
+  
+    # What's wrong with you people!?, 
+    # you can't have foo without bar
+    def bar
+     "bar"
     end
   end
 
-  def display_small_photo(profile, html = {}, options = {})
-    display_photo(profile, image_size(profile, "32x32"), html, options)
+  def method_missing(method_name, *args)
+    method_match = method_name.to_s.match(/display_(\w+)_photo/)
+    super unless method_match
+
+    photo_size = get_photo_size_for(method_match[1])
+    super unless photo_size
+
+    do_the_calling(photo_size, args)
   end
 
-  def display_medium_photo(profile, html = {}, options = {})
-    display_photo(profile, image_size(profile, "48x48"), html, options)
+  def get_photo_size_for(size_in_words)
+    case size_in_words
+    when 'small'  then '32x32'
+    when 'medium' then '48x48'
+    when 'large'  then '64x64'
+    when 'huge'   then '200x200'
+    end
   end
 
-  def display_large_photo(profile, html = {}, options = {}, link = true)
-    display_photo(profile, image_size(profile, "64x64"), html, options, link)
+  def do_the_calling(photo_size, args)
+    profile  = args[0]
+    html     = args[1]
+    options  = args[2]
+    img_size = image_size(profile, photo_size)
+
+    display_photo(profile, img_size, html, options)
   end
 
-  def display_huge_photo(profile, html = {}, options = {}, link = true)
-    display_photo(profile, image_size(profile, "200x200"), html, options, link)
+  def image_size(profile, non_rep_size)
+    (profile.user.rep?) ? '190x114' : non_rep_size
   end
 
   def display_photo(profile, size, html = {}, options = {}, link = true)
