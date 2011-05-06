@@ -46,15 +46,21 @@ class Helper
 
   def display_photo(profile, size, html = {}, options = { :show_default => true }, link = true)
 
-    return 'wrench.png' unless profile  # this should not happen
-    return 'NO DEFAULT' unless options[:show_default]
+    # this should not happen --> raise exeception here then?
+    return 'wrench.png' unless profile  
 
     html = get_html_defaults(html, size, profile)
 
     if link
-      profile.photo_link_with_image( { :size => size, :html => html } )
+      profile.photo_link_with_image( 
+      { :size => size, 
+        :html => html, 
+        :show_default => options[:show_default] } )
     else   
-      profile.photo_image_tag( { :size => size, :html => html } )
+      profile.photo_image_tag( 
+      { :size => size, 
+        :html => html, 
+        :show_default => options[:show_default] } )
     end
   end
 

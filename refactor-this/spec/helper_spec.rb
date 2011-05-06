@@ -58,8 +58,8 @@ describe "Helper" do
     describe "When the user doesn't have a photo" do
 
       before(:each) do
-        @user    = Factory.build(:empty_user)
-        @profile = Factory.build(:user_profile, :user => @user)
+        @user    = Factory.build(:user) 
+        @profile = Factory.build(:user_profile, :photo => nil, :user => @user)
       end
 
       describe "With a rep user" do
