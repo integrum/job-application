@@ -2,6 +2,7 @@ require './photo'
 require './user'
 require './user_profile'
 require './helper'
+require './factories'
 
 describe "Helper" do
 
@@ -18,12 +19,7 @@ describe "Helper" do
     describe "With a profile, user and photo requesting a link" do
 
       before(:each) do
-        @user    = User.new
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
-        @profile.user = @user
-        @photo   = Photo.new
-        @user.photo = @photo
+        @profile = Factory.build(:user_profile) 
         @profile.stub!(:has_valid_photo?).and_return(true)
       end
 
@@ -36,12 +32,7 @@ describe "Helper" do
     describe "With a profile, user and photo not requesting a link" do
 
       before(:each) do
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
-        @user    = User.new
-        @profile.user = @user
-        @photo   = Photo.new
-        @user.photo = @photo
+        @profile = Factory.build(:user_profile) 
         @profile.stub!(:has_valid_photo?).and_return(true)
       end
 
@@ -50,12 +41,11 @@ describe "Helper" do
       end
 
     end
-    
+     
     describe "Without a user, but requesting a link" do
 
       before(:each) do
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
+        @profile = Factory.build(:user_profile, :user => nil) 
       end
 
       it "return a default" do
@@ -67,11 +57,8 @@ describe "Helper" do
     describe "When the user doesn't have a photo" do
 
       before(:each) do
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
-        @user    = User.new
-        @profile.user = @user
-        @profile.stub!(:has_valid_photo?).and_return(false)
+        @user    = Factory.build(:empty_user)
+        @profile = Factory.build(:user_profile, :user => @user)
       end
 
       describe "With a rep user" do
@@ -102,10 +89,8 @@ describe "Helper" do
     describe "When the user doesn't have a photo and we don't want to display the default" do
 
       before(:each) do
-        @profile = UserProfile.new
-        @profile.name = "Clayton"
-        @user    = User.new
-        @profile.user = @user
+        @user    = Factory.build(:empty_user)
+        @profile = Factory.build(:user_profile, :user => @user)
         @profile.stub!(:has_valid_photo?).and_return(false)
       end
 
@@ -126,11 +111,11 @@ describe "Helper" do
           @user.stub!(:rep?).and_return(false)
         end
         it "return a default link" do
-          @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default link 100x100"
+          @helper.display_photo(@profile, "100x100", {}, {}, true).
+            should == "default link 100x100"
         end
       end
     end
-    
-    
+
   end
 end
