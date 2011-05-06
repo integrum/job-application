@@ -4,4 +4,8 @@ class User
   def hello_from
     "Hey it's #{name}"
   end
+
+  def rep?
+    return false
+  end
 end

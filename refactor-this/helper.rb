@@ -41,30 +41,31 @@ class Helper
   end
 
   def image_size(profile, non_rep_size)
-    (profile.user.rep?) ? '190x114' : non_rep_size
+    (profile.user and profile.user.rep?) ? '190x114' : non_rep_size
+  end
+
+  def display_photo(profile, size, html = {}, options = { :show_default => true }, link = true)
+
+    return 'wrench.png' unless profile  # this should not happen
+    return 'NO DEFAULT' unless options[:show_default]
+
+    html = get_html_defaults(html, size, profile)
+
+    if link
+      profile.photo_link_with_image( { :size => size, :html => html } )
+    else   
+      profile.photo_image_tag( { :size => size, :html => html } )
+    end
   end
 
   def get_html_defaults(html, size, profile)
     { :class => 'thumbnail',
-      :size => size,
+      :size  => size,
       :title => "Link to #{profile.name}" }.merge(html)
-  end
+  end 
 
-  def display_photo(profile, size, html = {}, 
-                    options = { :show_default => true }, 
-                    link = true)
-
-    return "wrench.png" unless profile  # this should not happen
-
-    html = get_html_defaults(html, size, profile)
-
-    if profile.has_valid_photo?
-      link ? "this link" : "just image"
-    else
-      options[:show_default] ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
-    end
-  end
-
+  # The reason why I choosed to leave this around, was because, since its
+  # a public method, I don't know if there's some legacy code that still depends on it
   def default_photo(profile, size, html = {}, link = true)
     if link
       profile.user && profile.user.rep? ? "default link 190x119" : "default link 100x100"
@@ -74,4 +75,3 @@ class Helper
   end
 
 end
-
