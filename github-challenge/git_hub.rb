@@ -12,7 +12,7 @@ class GitHub
 
   def render_commits
     commits = get_commits_grouped_by_authors
-    return 'Wrong user/repo' if commits.empty?
+    raise render_tha_html(commits)
   end
   
   def get_commits_grouped_by_authors
@@ -42,5 +42,9 @@ class GitHub
       { :commit_id      => commit['id'], 
         :commit_date    => commit['committed_date'],
         :commit_message => commit['message'] }
+    end
+
+    def render_tha_html(commits)
+      
     end
 end
