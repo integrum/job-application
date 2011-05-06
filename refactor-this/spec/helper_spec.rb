@@ -3,7 +3,7 @@ require './user'
 require './user_profile'
 require './helper'
 require './factories'
- 
+  
 describe "Helper" do
 
   before(:each) do
@@ -40,9 +40,9 @@ describe "Helper" do
         @helper.display_photo(@profile, "100x100", 
          {}, {:show_default => true}, false).should == "just image"
       end
-
+ 
     end
-
+  
     describe "Without a user, but requesting a link" do
 
       before(:each) do
@@ -101,7 +101,7 @@ describe "Helper" do
           @user.stub!(:rep?).and_return(true)
         end
 
-        it "return a default link" do
+        it "return a NO DEFAULT" do
           @helper.display_photo(@profile, "100x100", {}, {:show_default => false}, true).
             should == "NO DEFAULT"
         end
