@@ -64,23 +64,15 @@ class Helper
     end
   end
 
-  def default_photo(profile, size, html={}, link = true)
+  def default_photo(profile, size, html = {}, link = true)
     if link
-      # added profile.user
-      if profile.user && profile.user.rep?
-        "default link 190x119"
-        #link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
-      else
-        return "default link 100x100"
-        #link_to(image_tag("user#{size}.jpg", html), profile_path(profile) )
-      end
+      profile.user && profile.user.rep? ? "default link 190x119" : "default link 100x100"
     else
-      if profile.user.rep?
-        image_tag("user190x119.jpg", html)
-      else
+      profile.user.rep? ? 
+        image_tag("user190x119.jpg", html) : 
         image_tag("user#{size}.jpg", html)
-      end
     end
   end
+
 end
 
