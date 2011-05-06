@@ -4,8 +4,8 @@ class Helper
     def foo
       "foo"
     end
-  
-    # What's wrong with you people!?, 
+
+    # What's wrong with you people!?,
     # you can't have foo without bar
     def bar
      "bar"
@@ -44,40 +44,34 @@ class Helper
     (profile.user.rep?) ? '190x114' : non_rep_size
   end
 
+  def get_html_defaults(html, size, profile)
+    { :class => 'thumbnail',
+      :size => size,
+      :title => "Link to #{profile.name}" }.merge(html)
+  end
+
   def display_photo(profile, size, html = {}, options = {}, link = true)
     return "wrench.png" unless profile  # this should not happen
-    #return image_tag("wrench.png") unless profile  # this should not happen
 
     show_default_image = !(options[:show_default] == false)
-    #html.reverse_merge!(:class => 'thumbnail', :size => size, :title => "Link to #{profile.name}")
 
-    if profile && profile.user
-      # added to_s to photo
-      if profile.user && profile.user.photo && File.exists?(profile.user.photo.to_s)
-        @user = profile.user
-        if link
-          return "this link"
-          #return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) )
-        else
-          return "just image"
-          #return image_tag(url_for_file_column("user", "photo", size), html)
-        end
-      else
-        show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
-      end
+    html = get_html_defaults(html, size, profile)
+
+    if profile.has_valid_photo?
+      link ? "this link" : "just image"
+    else
+      show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
     end
-
-    show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
   end
 
   def default_photo(profile, size, html={}, link = true)
     if link
       # added profile.user
       if profile.user && profile.user.rep?
-        "default link 190x119"       
+        "default link 190x119"
         #link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
       else
-        return "default link 100x100"       
+        return "default link 100x100"
         #link_to(image_tag("user#{size}.jpg", html), profile_path(profile) )
       end
     else
@@ -89,3 +83,4 @@ class Helper
     end
   end
 end
+
