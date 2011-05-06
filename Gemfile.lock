@@ -4,8 +4,11 @@ GEM
     ZenTest (4.5.0)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
+    crack (0.1.8)
     diff-lcs (1.1.2)
     factory_girl (1.3.3)
+    httparty (0.7.7)
+      crack (= 0.1.8)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -21,4 +24,5 @@ PLATFORMS
 DEPENDENCIES
   autotest
   factory_girl
+  httparty
   rspec
