@@ -41,7 +41,7 @@ class Helper
   end
 
   def image_size(profile, non_rep_size)
-    (profile.user and profile.user.rep?) ? '190x114' : non_rep_size
+    (profile.user.rep?) ? '190x114' : non_rep_size
   end
 
   def display_photo(profile, size, html = {}, options = { :show_default => true }, link = true)
@@ -50,24 +50,25 @@ class Helper
     return 'wrench.png' unless profile  
 
     html = get_html_defaults(html, size, profile)
+    show_default = options[:show_default]
 
     if link
       profile.photo_link_with_image( 
       { :size => size, 
         :html => html, 
-        :show_default => options[:show_default] } )
+        :show_default => show_default } )
     else   
       profile.photo_image_tag( 
       { :size => size, 
         :html => html, 
-        :show_default => options[:show_default] } )
+        :show_default => show_default } )
     end
   end
 
   def get_html_defaults(html, size, profile)
     { :class => 'thumbnail',
       :size  => size,
-      :title => "Link to #{profile.name}" }.merge(html)
+      :title => "Link to #{profile.user.name}" }.merge(html)
   end 
 
   # The reason why I choosed to leave this around, was because, since its

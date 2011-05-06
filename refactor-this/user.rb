@@ -1,10 +1,10 @@
 class User
-  attr_accessor :name, :email
+  attr_accessor :name, :email, :profile
 
   def initialize(args = {})
     @name    = args[:name]
     @email   = args[:email]
-    @profile = UserProfile.new
+    @profile = UserProfile.new(self)
   end
 
   def hello_from
@@ -12,6 +12,7 @@ class User
   end
 
   def rep?
+    # Faked
     return false
   end
 end

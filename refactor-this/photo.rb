@@ -9,6 +9,12 @@ class Photo
   end
 
   def to_image_link(options)
+    image_tag = self.to_image_tag(options)
+    # add image tag to link
     "this link"
+  end
+
+  def valid?
+    File.exist?(to_s)   
   end
 end
