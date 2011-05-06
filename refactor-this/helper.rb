@@ -50,17 +50,18 @@ class Helper
       :title => "Link to #{profile.name}" }.merge(html)
   end
 
-  def display_photo(profile, size, html = {}, options = {}, link = true)
-    return "wrench.png" unless profile  # this should not happen
+  def display_photo(profile, size, html = {}, 
+                    options = { :show_default => true }, 
+                    link = true)
 
-    show_default_image = !(options[:show_default] == false)
+    return "wrench.png" unless profile  # this should not happen
 
     html = get_html_defaults(html, size, profile)
 
     if profile.has_valid_photo?
       link ? "this link" : "just image"
     else
-      show_default_image ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
+      options[:show_default] ? default_photo(profile, size, {}, link) : 'NO DEFAULT'
     end
   end
 
@@ -68,9 +69,7 @@ class Helper
     if link
       profile.user && profile.user.rep? ? "default link 190x119" : "default link 100x100"
     else
-      profile.user.rep? ? 
-        image_tag("user190x119.jpg", html) : 
-        image_tag("user#{size}.jpg", html)
+      profile.user.rep? ? "user190x119.jpg" : "user#{size}.jpg"
     end
   end
 
