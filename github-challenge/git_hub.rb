@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'httparty'
+require 'RedCloth'
 
 class GitHub
 
@@ -11,8 +12,8 @@ class GitHub
   end
 
   def render_commits
-    commits = get_commits_grouped_by_authors
-    raise render_tha_html(commits)
+    author_commits = get_commits_grouped_by_authors
+    render_tha_html(author_commits)
   end
   
   def get_commits_grouped_by_authors
@@ -44,7 +45,25 @@ class GitHub
         :commit_message => commit['message'] }
     end
 
-    def render_tha_html(commits)
+    # This is not, by any means, valid html, but it does get the job done
+    def render_tha_html(author_commits)
+      html_text = ""
       
+      if author_commits.empty?
+        html_text << "h1. Wrong user/repo\n\n"
+      else
+        html_text << "h1. Commits for #{@repo}\n\n"
+
+        author_commits.each do |author, commits|
+          html_text << "h2. #{author}\n\n"
+          # Do pardon my use of a bracket here
+          commits.each { |commit|
+            html_text << "* Commit Id: #{commit[:commit_id]}\n"
+            html_text << "Commited: #{commit[:commit_date]}\n"
+            html_text << "Commit Message: #{commit[:commit_message]}\n"
+          }
+        end
+      end
+      RedCloth.new(html_text).to_html
     end
 end

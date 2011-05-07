@@ -12,7 +12,7 @@ describe GitHub do
 
     it "should render an error message" do
       html = @git_hub.render_commits
-      html.should match('Wrong user/repo')
+      html.should match('<h1>Wrong user/repo</h1>')
     end
   end
 
@@ -26,7 +26,7 @@ describe GitHub do
     
     it "should render an error message" do
       html = @git_hub.render_commits
-      html.should match('Wrong user/repo')
+      html.should match('<h1>Wrong user/repo</h1>')
     end
   end
 
@@ -63,6 +63,15 @@ describe GitHub do
         end
       end
 
+      describe "when rendering the html" do
+        it "should render a header for each user name" do
+          user_names = @git_hub.get_commits_grouped_by_authors.keys
+          html = @git_hub.render_commits
+          user_names.each do |user_name|
+            html.should match("<h2>#{user_name}</h2>")
+          end
+        end
+     end
     end
   end
 end
