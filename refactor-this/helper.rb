@@ -1,67 +1,84 @@
 class Helper
-  def self.foo
-    "foo"
+
+  class << self
+    def foo
+      "foo"
+    end
+
+    # What's wrong with you people!?,
+    # you can't have foo without bar
+    def bar
+     "bar"
+    end
+  end
+
+  def method_missing(method_name, *args)
+    method_match = method_name.to_s.match(/display_(\w+)_photo/)
+    super unless method_match
+
+    photo_size = get_photo_size_for(method_match[1])
+    super unless photo_size
+
+    do_the_calling(photo_size, args)
+  end
+
+  def get_photo_size_for(size_in_words)
+    case size_in_words
+    when 'small'  then '32x32'
+    when 'medium' then '48x48'
+    when 'large'  then '64x64'
+    when 'huge'   then '200x200'
+    end
+  end
+
+  def do_the_calling(photo_size, args)
+    profile  = args[0]
+    html     = args[1]
+    options  = args[2]
+    img_size = image_size(profile, photo_size)
+
+    display_photo(profile, img_size, html, options)
   end
 
   def image_size(profile, non_rep_size)
-    if profile.user.rep?
-      '190x114'
-    else
-      non_rep_size
-    end
+    (profile.user.rep?) ? '190x114' : non_rep_size
   end
 
-  def display_small_photo(profile, html = {}, options = {})
-    display_photo(profile, image_size(profile, "32x32"), html, options)
-  end
+  def display_photo(profile, size, html = {}, options = { :show_default => true }, link = true)
 
-  def display_medium_photo(profile, html = {}, options = {})
-    display_photo(profile, image_size(profile, "48x48"), html, options)
-  end
+    # this should not happen --> raise exeception here then?
+    return 'wrench.png' unless profile  
 
-  def display_large_photo(profile, html = {}, options = {}, link = true)
-    display_photo(profile, image_size(profile, "64x64"), html, options, link)
-  end
+    html = get_html_defaults(html, size, profile)
+    show_default = options[:show_default]
 
-  def display_huge_photo(profile, html = {}, options = {}, link = true)
-    display_photo(profile, image_size(profile, "200x200"), html, options, link)
-  end
-
-  def display_photo(profile, size, html = {}, options = {}, link = true)
-    return image_tag("wrench.png") unless profile  # this should not happen
-
-    show_default_image = !(options[:show_default] == false)
-    html.reverse_merge!(:class => 'thumbnail', :size => size, :title => "Link to #{profile.name}")
-
-    if profile && profile.user
-      if profile.user && profile.user.photo && File.exists?(profile.user.photo)
-        @user = profile.user
-        if link
-          return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) )
-        else
-          return image_tag(url_for_file_column("user", "photo", size), html)
-        end
-      else
-        show_default_image ? default_photo(profile, size, {}, link) : ''
-      end
-    end
-
-    show_default_image ? default_photo(profile, size, {}, link) : ''
-  end
-
-  def default_photo(profile, size, html={}, link = true)
     if link
-      if profile.user.rep?
-        link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
-      else
-        link_to(image_tag("user#{size}.jpg", html), profile_path(profile) )
-      end
-    else
-      if profile.user.rep?
-        image_tag("user190x119.jpg", html)
-      else
-        image_tag("user#{size}.jpg", html)
-      end
+      profile.photo_link_with_image( 
+      { :size => size, 
+        :html => html, 
+        :show_default => show_default } )
+    else   
+      profile.photo_image_tag( 
+      { :size => size, 
+        :html => html, 
+        :show_default => show_default } )
     end
   end
+
+  def get_html_defaults(html, size, profile)
+    { :class => 'thumbnail',
+      :size  => size,
+      :title => "Link to #{profile.user.name}" }.merge(html)
+  end 
+
+  # The reason why I choosed to leave this around, was because, since its
+  # a public method, I don't know if there's some legacy code that still depends on it
+  def default_photo(profile, size, html = {}, link = true)
+    if link
+      profile.user && profile.user.rep? ? "default link 190x119" : "default link 100x100"
+    else
+      profile.user.rep? ? "user190x119.jpg" : "user#{size}.jpg"
+    end
+  end
+
 end
