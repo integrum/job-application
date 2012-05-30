@@ -1,0 +1,43 @@
+<html><head><title>Github Commits by Author</head><body><h1><center>Recent Github Commits by Author</center></h1><hr><h2>Don Wilson</h2><ul><li><strong>Commit</strong>: c4d977fbbc31b0a6c7557846f9fe01e688a6f845<br />Added :negative_format option to number_to_currency function [#5894 state:resolved]
+
+Signed-off-by: Andrew White <andyw@pixeltrix.co.uk></li></ul><hr><h2>Aaron Patterson</h2><ul><li><strong>Commit</strong>: 63625388154043dd6cde755f62c095dad87ad173<br />add more tests surrounding camlize in xmlmini, refactor rename_key()</li><li><strong>Commit</strong>: 296467fcc40bb3c6a4f42dedc267eb4f313843a9<br />only returning where values for the corresponding relation, also filtering where value hash based on table name [#5234 state:resolved] [#5184 state:resolved]</li><li><strong>Commit</strong>: cbca12f9086826dd7243c7c847deea89bbe026b1<br />adding tests for #5234 and #5184. Tests were from Akira Matsuda.  Thanks Akira!</li><li><strong>Commit</strong>: 7d5762d2c2147f8240614997682e5e535a3e4f33<br />no need to merge where values if no new where values have been added</li><li><strong>Commit</strong>: 2b48e476540c946579007188e59fd393bdf7a163<br />ruby-debug19 does not work with 1.9.3, so I am removing it</li><li><strong>Commit</strong>: 67a3a702951dae905b6270d652dbd14853b01c26<br />refactoring find_join_association</li><li><strong>Commit</strong>: 2a47e7ef105559c4c931efff8fd14c454a21cf7a<br />only do string substitution on column names once, remove intermediate data structures</li><li><strong>Commit</strong>: 2e07260f36f3e192e5f0b51b287700b419fd1019<br />columns are always strings</li><li><strong>Commit</strong>: 6cf44a1bd64ba10497742d70ad78fe68faa16e99<br />no need to to_i, sqlite does that for us</li><li><strong>Commit</strong>: 6a3d6b7f1352efd3e7b931533740252b04850e27<br />select_all() should always return an array, so no need to test</li><li><strong>Commit</strong>: f6ddb3553a38d7d479b0177ff29eb4a2a3c17e9f<br />fisting test name</li><li><strong>Commit</strong>: 9ce02118061fda778e592be83f7c4c3c7c75bfbf<br />speeding up query cache</li><li><strong>Commit</strong>: 7104122cc3fca4939d77a6780910cd98ff02fab0<br />making query cache work with prepared statements</li><li><strong>Commit</strong>: e73b0b84d939af241dfbba8931d8add9724595e4<br />renaming bind_values to binds where it makes sense</li><li><strong>Commit</strong>: 104d0b263e5d9b17216f06c72d422d26ca5a537f<br />adding backwards compatibility for non-prepare statement handling drivers</li><li><strong>Commit</strong>: fca229e205e7d417a025198825cfe19c5c395bff<br />caching column values</li></ul><hr><h2>Xavier Noria</h2><ul><li><strong>Commit</strong>: 208fb2920d6c6c6be97a7086cea24f4c8220010c<br />made a pass to the docs of :negative_format</li><li><strong>Commit</strong>: 3cf85fb4fcdae65a4d5a1a5c418492ea0cf9ad6d<br />Merge branch 'master' of git://github.com/lifo/docrails</li></ul><hr><h2>Jeremy Holland</h2><ul><li><strong>Commit</strong>: ea0faa2055fbbe6ac9ebe960ddf4bea8adda287a<br />Allowing to_xml :camelize option to be set to :lower to enable lower-camelcase tags [#5903 state:resolved]</li></ul><hr><h2>Jon Leighton</h2><ul><li><strong>Commit</strong>: b82fab25f999dd6245c23a22f948048eef2d5d9a<br />Refactoring: replace the mix of variables like @finder_sql, @counter_sql, etc with just a single scope hash (created on initialization of the proxy). This is now used consistently across all associations. Therefore, all you have to do to ensure finding/counting etc is done correctly is implement the scope correctly.</li></ul><hr><h2>Denis Odorcic</h2><ul><li><strong>Commit</strong>: cc9742920ccaf8e985fbe5239edb966949eb91c3<br />Convert :primary_key in association to a string before comparing to column names, so that for example :primary_key => :another_pk works as well [#5605 state:resolved]</li></ul><hr><h2>Pratik Naik</h2><ul><li><strong>Commit</strong>: 18b6aa65389cd10d62dc0005e632a3a2d474dec4<br />Make should_record_timestamps? serialization aware rather than object#changed?</li><li><strong>Commit</strong>: e911ed1f0f1633b0ae1b5146805eee6388b1f02f<br />Ensure save always updates timestamps when serialized attributes are present</li><li><strong>Commit</strong>: c5c2e4fefde539e1c1753d4ca184c3bf81d496be<br />Add timestamps to Topic</li></ul><hr><h2>Andrew White</h2><ul><li><strong>Commit</strong>: d446392f76c063d9f04396a1d3ca9e314a521671<br />Add additional HTTP request methods from the following RFCs:
+
+* Hypertext Transfer Protocol -- HTTP/1.1
+  http://www.ietf.org/rfc/rfc2616.txt)
+
+* HTTP Extensions for Distributed Authoring -- WEBDAV
+  http://www.ietf.org/rfc/rfc2518.txt
+
+* Versioning Extensions to WebDAV
+  http://www.ietf.org/rfc/rfc3253.txt
+
+* Ordered Collections Protocol (WebDAV)
+  http://www.ietf.org/rfc/rfc3648.txt
+
+* Web Distributed Authoring and Versioning (WebDAV) Access Control Protocol
+  http://www.ietf.org/rfc/rfc3744.txt
+
+* Web Distributed Authoring and Versioning (WebDAV) SEARCH
+  http://www.ietf.org/rfc/rfc5323.txt
+
+* PATCH Method for HTTP
+  http://www.ietf.org/rfc/rfc5789.txt
+
+[#2809 state:resolved] [#5895 state:resolved]</li><li><strong>Commit</strong>: 47ceb135c6b75988f2712bc44db397b992c1c731<br />Ensure that Rails.env is defined first</li></ul><hr><h2>snusnu</h2><ul><li><strong>Commit</strong>: 973b90877755522772480bce73fcbc17320da2ef<br />Added missing AS require to active_model/naming.rb
+
+We saw a failing spec when running the DataMapper
+ActiveModel compliance specs for dm-active_model.
+
+  ActiveModel::Naming#model_name
+
+relies on the Module#parents method defined in
+
+  active_support/core_ext/module/introspection.rb
+
+Adding the appropriate require statement of course
+fixed our specs.</li></ul><hr><h2>Ernie Miller</h2><ul><li><strong>Commit</strong>: 0bb85ed9ffa9808926b46e8f7e59cab5b85ac19f<br />Fix issues when including the same association multiple times and mixing joins/includes together.</li></ul><hr><h2>Jeff Kreeftmeijer</h2><ul><li><strong>Commit</strong>: bb9c58eb4aa637fa75c69c705a9918d6322ff834<br />Make sure capture's output gets html_escaped [#5545 state:resolved]
+
+Also remove a duplicate test_link_to_unless assertion and add .html_safe to the
+remaining one.
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com></li></ul><hr><h2>Aditya Sanghi</h2><ul><li><strong>Commit</strong>: 3ca16650389aa0d186a441f74b54a409cce4b392<br />reverting last change to javascript helper; needs more investigation</li><li><strong>Commit</strong>: 74f3f74b6e6a33abe645a5e9d1bb04cb58676575<br />fixed javascript helper doc to close issue #10 raised by jialin</li></ul><hr><h2>Santiago Pastorino</h2><ul><li><strong>Commit</strong>: d7ec94f66580abceffd313b943636ef113ffa662<br />Just initialize options with an empty hash</li><li><strong>Commit</strong>: 3c7215bdce30aaaa6b86f5ec905c981346e170eb<br />Test that capture doesn't escape twice</li><li><strong>Commit</strong>: 72d12d94559f7c124fa2ec88eb668ad2948c02f4<br />Call as ERB::Util.html_escape since is not the module is not included here</li></ul><hr></body></html>

@@ -12,14 +12,22 @@ require 'photo'
 describe "Helper" do
   before(:each) do
     @helper = Helper.new
+    @helper.stub!(:profile_path).and_return("profile_path")
+    @helper.stub!(:url_for_file_column).and_return("file_column_url")
+    @helper.stub!(:set_image_default_html).and_return({})
   end
   describe "display_photo" do
+    before do
+      @helper.stub!(:image_tag).and_return("wrench.png")
+    end
     it "should return the wrench if there is no profile" do
       @helper.display_photo(nil, "100x100", {}, {}, true).should == "wrench.png"
     end
         
     describe "With a profile, user and photo requesting a link" do
       before(:each) do
+        @helper.stub!(:image_tag).and_return("")
+        @helper.stub_chain(:link_to).and_return("this link")
         @profile = UserProfile.new
         @profile.name = "Clayton"
         @user    = User.new
@@ -35,6 +43,7 @@ describe "Helper" do
     
     describe "With a profile, user and photo not requesting a link" do
       before(:each) do
+        @helper.stub!(:image_tag).and_return("just image")
         @profile = UserProfile.new
         @profile.name = "Clayton"
         @user    = User.new
@@ -50,6 +59,8 @@ describe "Helper" do
     
     describe "Without a user, but requesting a link" do
       before(:each) do
+        @helper.stub!(:image_tag).and_return("")
+        @helper.stub!(:link_to).and_return("default link 100x100")
         @profile = UserProfile.new
         @profile.name = "Clayton"
       end
@@ -68,6 +79,8 @@ describe "Helper" do
       end
       describe "With a rep user" do
         before(:each) do
+          @helper.stub!(:image_tag).and_return("")
+          @helper.stub!(:link_to).and_return("default link 190x119")
           @user.stub!(:rep?).and_return(true)
         end
         it "return a default link" do
@@ -78,6 +91,8 @@ describe "Helper" do
       
       describe "With a regular user" do
         before(:each) do
+          @helper.stub!(:image_tag).and_return("")
+          @helper.stub!(:link_to).and_return("default link 100x100")
           @user.stub!(:rep?).and_return(false)
         end
         it "return a default link" do
@@ -106,6 +121,8 @@ describe "Helper" do
       
       describe "With a regular user" do
         before(:each) do
+          @helper.stub!(:image_tag).and_return("")
+          @helper.stub!(:link_to).and_return("default link 100x100")
           @user.stub!(:rep?).and_return(false)
         end
         it "return a default link" do
