@@ -1,5 +1,14 @@
+# NOTE: removed requires because they are not needed to pass the unit tests
+#require 'rubygems'
+#require 'factory_girl'
+#require 'factories'
+#require 'rspec'
+#require 'rspec/autorun'
+#require 'redgreen'
 require 'user_profile'
-require 'helper'
+require 'helper_notated'
+# NOTE: refactored out the User class
+#require 'user'
 require 'photo'
 
 
@@ -18,6 +27,11 @@ describe "Helper" do
       before(:each) do
         @profile = UserProfile.new
         @profile.name = "Clayton"
+=begin
+NOTE: refactored out the User class
+        @user = User.new
+        @profile.user = @user
+=end
         @photo = Photo.new
         @profile.photo = @photo
         @profile.stub!(:has_valid_photo?).and_return(true)
@@ -33,6 +47,11 @@ describe "Helper" do
       before(:each) do
         @profile = UserProfile.new
         @profile.name = "Clayton"
+=begin
+NOTE: refactored out the User class
+        @user = User.new
+        @profile.user = @user
+=end
         @photo = Photo.new
         @profile.photo = @photo
         @profile.stub!(:has_valid_photo?).and_return(true)
@@ -58,10 +77,16 @@ describe "Helper" do
       before(:each) do
         @profile = UserProfile.new
         @profile.name = "Clayton"
+=begin
+NOTE: refactored out the User class
+        @user = User.new
+        @profile.user = @user
+=end
         @profile.stub!(:has_valid_photo?).and_return(false)
       end
       describe "With a rep user" do
         before(:each) do
+          # NOTE: refactored out the User class
           @profile.stub!(:rep?).and_return(true)
           @helper.stub!(:link_to).and_return("default link 190x119")
         end
@@ -73,6 +98,7 @@ describe "Helper" do
 
       describe "With a regular user" do
         before(:each) do
+          # NOTE: refactored out the User class
           @profile.stub!(:rep?).and_return(false)
           @helper.stub!(:link_to).and_return("default link 100x100")
         end
@@ -86,10 +112,16 @@ describe "Helper" do
       before(:each) do
         @profile = UserProfile.new
         @profile.name = "Clayton"
+=begin
+NOTE: refactored out the User class
+        @user = User.new
+        @profile.user = @user
+=end
         @profile.stub!(:has_valid_photo?).and_return(false)
       end
       describe "With a rep user" do
         before(:each) do
+          # NOTE: refactored out the User class
           @profile.stub!(:rep?).and_return(true)
         end
         it "return a default link" do
@@ -100,9 +132,13 @@ describe "Helper" do
       
       describe "With a regular user" do
         before(:each) do
+          # NOTE: refactored out the User class
           @profile.stub!(:rep?).and_return(false)
         end
         it "return a default link" do
+          # added '{:show_default => false}' and changed expected result to
+          # "NO DEFAULT" because the outer describe statement says:
+          # "we don't want to display the default"
           @helper.display_photo(@profile, "100x100", {}, {:show_default => false}, true).should == "NO DEFAULT"
         end
       end
