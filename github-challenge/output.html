@@ -1,0 +1,44 @@
+<html><head><title>Ben Hall - Integrum Job Application</title></head><body><pre><h1>Aaron Patterson</h1><ul><li>Commit: only compute path.to_s once </li><li>Commit: remove to_s implementation so that inspect is helpful </li><li>Commit: * LocalCache strategy is now a real middleware class, not an anonymous class
+posing for pictures. </li><li>Commit: require deprecation so that we can deprecate methods! </li><li>Commit: anonymous classes have blank names on ruby 1.8 </li><li>Commit: make sure string keys are always looked up from the class cache </li><li>Commit: Ruby 1.8: Y U NO FUN? </li><li>Commit: use newer class cache api </li><li>Commit: adding deprecation noticies to deprecated class cache methods </li><li>Commit: adding backwards compat for class cache references. <3<3 </li><li>Commit: yo dawg, directly use the class cache rather than the cache of the cache </li><li>Commit: refactor Reference to a ClassCache object, fix lazy lookup in Middleware so that anonymous classes are supported </li><li>Commit: initialize ivars </li><li>Commit: Enumerable gives us include?, so remove include? </li><li>Commit: prefer composition over inheritance with AD::MS </li><li>Commit: fixing test case test on 1.9.3dev </li><li>Commit: Revert "compute ext in initialize, and use an attr_reader"
+
+This reverts commit 2dbb73bdda3b81947fd112486ac4285fb1a6e3a9.
+
+Conflicts:
+
+	actionpack/lib/action_dispatch/middleware/static.rb </li><li>Commit: no need to pass a regex to Regexp.compile </li><li>Commit: compute ext in initialize, and use an attr_reader </li><li>Commit: Merge branch 'fuuu'
+
+* fuuu:
+  Move JoinDependency and friends from ActiveRecord::Associations::ClassMethods to just ActiveRecord::Associations
+  Rewrote AssociationPreload. </li><li>Commit: use a subclass of AS::TZ for testing html output </li><li>Commit: reduce two method calls per request, 1 to method_missing and one to send </li></ul><h1>Alexander Uvarov</h1><ul><li>Commit: Add an option to FormBuilder to omit hidden field with id
+
+[#4551 state:committed]
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li><li>Commit: Move ActiveModel::AttributeMethods#attribute_methods_generated? to ActiveRecord, so it's flexible now
+
+[#6428 state:resolved]
+
+Signed-off-by: José Valim <jose.valim@gmail.com> </li></ul><h1>Sam Elliott</h1><ul><li>Commit: Remove warnings about redefined test methods
+
+[#6490 state:committed]
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li></ul><h1>Cheah Chu Yeow</h1><ul><li>Commit: Fix Action caching bug where an action that has a non-cacheable response always renders a nil response body. It now correctly renders the response body.
+
+Note that only GET and HTTP 200 responses can be cached.
+
+[#6480 state:committed]
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li></ul><h1>José Valim</h1><ul><li>Commit: log and readme should respect --quiet </li></ul><h1>Jon Leighton</h1><ul><li>Commit: Move JoinDependency and friends from ActiveRecord::Associations::ClassMethods to just ActiveRecord::Associations </li><li>Commit: Rewrote AssociationPreload. </li></ul><h1>Josh Kalderimis</h1><ul><li>Commit: Updated the AS guides with some information on the difference between Date.today and Date.current. </li><li>Commit: updated Time, Date and DateTime current methods in AS to use Time.zone and not Time.zone_default.
+
+[#6410 state:committed] </li></ul><h1>Dalibor Nasevic</h1><ul><li>Commit: No need of instance variable
+
+[#6502 state:committed]
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li><li>Commit: Fixed typos in asset_host_test
+
+[#6501 state:committed]
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li></ul><h1>Diego Carrion</h1><ul><li>Commit: reverted tests deleted by 080345baca1076a9788d, refactored implementations should not invalidate the validations
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li><li>Commit: refactored Time#<=> and DateTime#<=> by removing unnecessary calls without losing performance
+
+Signed-off-by: Santiago Pastorino <santiago@wyeworks.com> </li></ul></pre></body></html>
