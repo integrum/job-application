@@ -1,0 +1,15 @@
+This directory contains script for fetching the most recent Ruby on Rails commits from Github.
+
+Ruby:
+  
+  Usage:  ruby rails-commits.rb
+  Prerequisites:	
+    - gem install json
+
+PHP:
+  
+  Usage:  php rails-commits.php
+  Prerequisites:
+    - json extension installed & enabled
+    - short tags enabled
+

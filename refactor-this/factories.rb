@@ -7,6 +7,10 @@ Factory.define(:user) do |u|
   u.email Factory.next(:email)
 end
 
+Factory.define(:user_profile) do |p|
+  p.name "Clayton"
+end
+
 Factory.define(:photo) do |p|
 
 end
